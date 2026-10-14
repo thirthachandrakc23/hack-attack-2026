@@ -3,6 +3,7 @@ import { apiGet } from './services/api.js';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
+import MentorsPage from './pages/MentorsPage.jsx';
 import './styles/App.css';
 
 /**
@@ -110,11 +111,12 @@ function App() {
 
         {/* Temporary placeholders for subsequent stages */}
         {currentView === 'mentors' && (
-          <div style={{ padding: '4rem 1.5rem', textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
-            <h2>Mentor Discovery</h2>
-            <p style={{ color: '#64748b' }}>Stage 3 & 4: Mentor Cards & Discovery Grid coming next.</p>
-            <button className="status-retry-btn" onClick={() => setCurrentView('home')}>← Back to Home</button>
-          </div>
+          <MentorsPage
+            onBookSession={(mentor) => {
+              // We will open booking modal in Stage 7
+              alert(`Selected mentor: ${mentor.name}. Booking interface will open in Stage 7!`);
+            }}
+          />
         )}
 
         {currentView === 'resources' && (
