@@ -1,4 +1,4 @@
-/* Minimal, clean styling for SkillBridge frontend */
+/* Clean styling for SkillBridge frontend */
 
 :root {
   --bg-color: #f8fafc;
@@ -19,99 +19,85 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-main);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
 }
 
-.app-container {
-  max-width: 600px;
-  width: 90%;
-  margin: 2rem auto;
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.header h1 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.75rem;
-  color: var(--text-main);
+/* System Banner for Health Check */
+.system-status-banner {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 1.5rem;
+  font-size: 0.85rem;
 }
 
-.tagline {
-  margin: 0 0 1.5rem 0;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
+.system-status-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.status-box {
-  margin: 1.5rem 0;
-  padding: 1rem 1.25rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.75rem;
 }
 
-.status-box.loading {
-  background-color: #f1f5f9;
-  color: #475569;
-  border: 1px solid #cbd5e1;
+.status-badge.loading {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
 }
 
-.status-box.success {
+.status-badge.success {
   background-color: var(--success-bg);
   color: var(--success-text);
   border: 1px solid #86efac;
 }
 
-.status-box.error {
+.status-badge.error {
   background-color: var(--error-bg);
   color: var(--error-text);
   border: 1px solid #fca5a5;
 }
 
-.details {
-  background: #f8fafc;
-  padding: 0.75rem;
-  border-radius: 6px;
-  font-family: monospace;
-  font-size: 0.85rem;
-  margin-top: 0.75rem;
-  word-break: break-all;
-}
-
-button {
-  background-color: var(--primary);
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.9rem;
+.status-retry-btn {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.15s ease;
 }
 
-button:hover {
-  background-color: var(--primary-hover);
+.status-retry-btn:hover {
+  background-color: #eff6ff;
+  border-color: var(--primary);
 }
 
-button:disabled {
-  background-color: #94a3b8;
+.status-retry-btn:disabled {
+  opacity: 0.6;
   cursor: not-allowed;
-}
-
-.footer-info {
-  margin-top: 1.5rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border);
-  padding-top: 1rem;
 }
