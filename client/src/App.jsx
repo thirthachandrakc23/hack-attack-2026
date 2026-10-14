@@ -5,6 +5,8 @@ import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
 import MentorsPage from './pages/MentorsPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
+import DashboardPage from './pages/DashboardPage.jsx';
+import BookingModal from './components/BookingModal.jsx';
 import './styles/App.css';
 
 /**
@@ -20,6 +22,8 @@ function App() {
   const [status, setStatus] = useState('loading'); // 'loading' | 'success' | 'error'
   const [message, setMessage] = useState('');
   const [errorDetails, setErrorDetails] = useState('');
+  const [bookingMentor, setBookingMentor] = useState(null);
+  const [userBookings, setUserBookings] = useState([]);
 
   // Function to call the health check endpoint
   const checkServerHealth = async () => {
@@ -114,8 +118,7 @@ function App() {
         {currentView === 'mentors' && (
           <MentorsPage
             onBookSession={(mentor) => {
-              // We will open booking modal in Stage 7
-              alert(`Selected mentor: ${mentor.name}. Booking interface will open in Stage 7!`);
+              setBookingMentor(mentor);
             }}
           />
         )}
@@ -129,11 +132,10 @@ function App() {
         )}
 
         {currentView === 'dashboard' && (
-          <div style={{ padding: '4rem 1.5rem', textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
-            <h2>User Dashboard</h2>
-            <p style={{ color: '#64748b' }}>Stage 8: Learner & Mentor dashboards coming up.</p>
-            <button className="status-retry-btn" onClick={() => setCurrentView('home')}>← Back to Home</button>
-          </div>
+          <DashboardPage
+            userBookings={userBookings}
+            onNavigate={setCurrentView}
+          />
         )}
 
         {currentView === 'register' && (
@@ -145,6 +147,17 @@ function App() {
           />
         )}
       </main>
+
+      {/* Booking Modal Dialog */}
+      {bookingMentor && (
+        <BookingModal
+          mentor={bookingMentor}
+          onClose={() => setBookingMentor(null)}
+          onConfirmBooking={(newBooking) => {
+            setUserBookings((prev) => [newBooking, ...prev]);
+          }}
+        />
+      )}
 
       {/* Footer */}
       <Footer onNavigate={setCurrentView} />
