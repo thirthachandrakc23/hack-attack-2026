@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Button from './common/Button.jsx';
+import { registerUserApi } from '../services/api.js';
 
 /**
  * LearnerForm Component
@@ -43,7 +44,7 @@ function LearnerForm({ onSubmitSuccess }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -52,14 +53,18 @@ function LearnerForm({ onSubmitSuccess }) {
     }
 
     setIsSubmitting(true);
-    // Simulate brief network submission delay
-    setTimeout(() => {
-      setIsSubmitting(false);
-      onSubmitSuccess({
+    try {
+      const payload = {
         role: 'learner',
         ...formData,
-      });
-    }, 400);
+      };
+      const response = await registerUserApi(payload);
+      setIsSubmitting(false);
+      onSubmitSuccess(response.data || payload);
+    } catch (err) {
+      setIsSubmitting(false);
+      setErrors({ general: err.message || 'Registration failed' });
+    }
   };
 
   return (

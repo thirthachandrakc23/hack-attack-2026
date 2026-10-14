@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Button from './common/Button.jsx';
+import { registerUserApi } from '../services/api.js';
 
 /**
  * MentorForm Component
@@ -46,7 +47,7 @@ function MentorForm({ onSubmitSuccess }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -55,14 +56,19 @@ function MentorForm({ onSubmitSuccess }) {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      onSubmitSuccess({
+    try {
+      const payload = {
         role: 'mentor',
         ...formData,
         skills: formData.skills.split(',').map((s) => s.trim()).filter(Boolean),
-      });
-    }, 400);
+      };
+      const response = await registerUserApi(payload);
+      setIsSubmitting(false);
+      onSubmitSuccess(response.data || payload);
+    } catch (err) {
+      setIsSubmitting(false);
+      setErrors({ general: err.message || 'Application submission failed' });
+    }
   };
 
   return (

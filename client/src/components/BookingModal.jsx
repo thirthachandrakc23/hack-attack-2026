@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Button from './common/Button.jsx';
+import { createBookingApi } from '../services/api.js';
 import '../styles/BookingModal.css';
 
 /**
@@ -45,7 +46,7 @@ function BookingModal({ mentor, onClose, onConfirmBooking }) {
 
   if (!mentor) return null;
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (!selectedSlot) {
       setErrorMsg('Please select an available time slot.');
       return;
@@ -68,13 +69,17 @@ function BookingModal({ mentor, onClose, onConfirmBooking }) {
       bookedAt: new Date().toISOString(),
     };
 
-    setTimeout(() => {
+    try {
+      const response = await createBookingApi(bookingPayload);
       setIsSubmitting(false);
       setBookingConfirmed(true);
       if (onConfirmBooking) {
-        onConfirmBooking(bookingPayload);
+        onConfirmBooking(response.data || bookingPayload);
       }
-    }, 450);
+    } catch (err) {
+      setIsSubmitting(false);
+      setErrorMsg(err.message || 'Failed to submit booking');
+    }
   };
 
   return (
