@@ -4,6 +4,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
 import MentorsPage from './pages/MentorsPage.jsx';
+import RegisterPage from './pages/RegisterPage.jsx';
 import './styles/App.css';
 
 /**
@@ -136,11 +137,12 @@ function App() {
         )}
 
         {currentView === 'register' && (
-          <div style={{ padding: '4rem 1.5rem', textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
-            <h2>Registration</h2>
-            <p style={{ color: '#64748b' }}>Stage 6: Learner and Mentor registration forms coming up.</p>
-            <button className="status-retry-btn" onClick={() => setCurrentView('home')}>← Back to Home</button>
-          </div>
+          <RegisterPage
+            onNavigate={setCurrentView}
+            onUserRegistered={(user) => {
+              console.log('User registered in SkillBridge:', user);
+            }}
+          />
         )}
       </main>
 
