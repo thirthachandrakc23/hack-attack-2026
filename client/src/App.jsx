@@ -4,6 +4,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
 import MentorsPage from './pages/MentorsPage.jsx';
+import ResourcesPage from './pages/ResourcesPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import BookingModal from './components/BookingModal.jsx';
@@ -123,13 +124,7 @@ function App() {
           />
         )}
 
-        {currentView === 'resources' && (
-          <div style={{ padding: '4rem 1.5rem', textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
-            <h2>Free Learning Resources</h2>
-            <p style={{ color: '#64748b' }}>Stage 9: Curated learning guides and tutorials coming up.</p>
-            <button className="status-retry-btn" onClick={() => setCurrentView('home')}>← Back to Home</button>
-          </div>
-        )}
+        {currentView === 'resources' && <ResourcesPage />}
 
         {currentView === 'dashboard' && (
           <DashboardPage
